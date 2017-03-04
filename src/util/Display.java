@@ -2,20 +2,20 @@ package util;
 
 import java.util.concurrent.LinkedBlockingQueue;
 
-import javax.swing.JLabel;
-import javax.swing.JTextArea;
+import javafx.application.Platform;
+import javafx.scene.text.Text;
 
 public class Display {
 	Sentence currentSentence;
-	JTextArea incorrectWords;
-	LinkedBlockingQueue<String> incorrectWordsList;
-	JLabel score;
-	int currentScore;
+	public LinkedBlockingQueue<String> incorrectWordsList;
+	public int currentScore;
+	private Text score;
+	private Text synonym;
 
-	public Display(JTextArea jta, JLabel jl) {
+	public Display(Text score, Text synonym) {
 		this.currentScore = 0;
-		this.incorrectWords = jta;
-		this.score = jl;
+		this.score = score;
+		this.synonym=synonym;
 		this.incorrectWordsList = new LinkedBlockingQueue<>();
 		this.currentSentence = new Sentence(null, incorrectWordsList);
 	}
@@ -23,7 +23,19 @@ public class Display {
 	public String fixSentence() {
 		int error=currentSentence.checkSentence();
 		currentScore+=currentSentence.getScore();
+		Platform.runLater(new Runnable() {			
+			@Override
+			public void run() {
+				score.setText(currentScore+"");
+			}
+		});
 		String nextKeyWord=currentSentence.nextKeyWord();
+		Platform.runLater(new Runnable() {			
+			@Override
+			public void run() {
+				synonym.setText(nextKeyWord);
+			}
+		});
 		System.out.println(nextKeyWord);
 		return nextKeyWord;
 	}
@@ -31,6 +43,12 @@ public class Display {
 	public void put(String word) throws InterruptedException {
 		currentSentence.put(word);
 		currentScore+=currentSentence.getScore();
+		Platform.runLater(new Runnable() {			
+			@Override
+			public void run() {
+				score.setText(currentScore+"");
+			}
+		});
 	}
 
 	public void addNewSentence(String nextKeyWord) {

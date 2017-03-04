@@ -3,6 +3,7 @@ package dictionary;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.util.LinkedList;
 
 import javax.net.ssl.HttpsURLConnection;
 
@@ -62,7 +63,7 @@ public class OxfordDictionary {
 		}
 	}
 
-	public static boolean isCorrect(String word, boolean[] nv, String[] originWord) {
+	public static boolean isCorrect(String word, boolean[] nv, LinkedList<String> originWord) {
 		String params = dictionaryInflectedForm(word);
 		String response = doInBackground(params);
 		if (response.equals("Not Found")) {
@@ -73,11 +74,11 @@ public class OxfordDictionary {
 			JSONObject json = new JSONObject(response);
 			JSONObject results = json.getJSONArray("results").getJSONObject(0);
 			JSONArray lexicalEntries = results.getJSONArray("lexicalEntries");
-			//System.out.println(lexicalEntries.getJSONObject(0));
-			JSONObject inflectionOf = lexicalEntries.getJSONObject(0).getJSONArray("inflectionOf").getJSONObject(0);
-			originWord[0]=inflectionOf.getString("text").toLowerCase();
+			// System.out.println(lexicalEntries.getJSONObject(0));
 			for (int i = 0; i < lexicalEntries.length(); i++) {
 				String category = lexicalEntries.getJSONObject(i).getString("lexicalCategory");
+				originWord.add( lexicalEntries.getJSONObject(i).getJSONArray("inflectionOf").getJSONObject(0)
+						.getString("text").toLowerCase());
 				if (category.equals("Noun"))
 					nv[0] = true;
 				else if (category.equals("Verb"))
@@ -109,8 +110,8 @@ public class OxfordDictionary {
 
 	public static void main(String[] args) {
 		boolean[] nv = new boolean[2];
-		String[] originWord = new String[1];
-		String word = "in";
+		LinkedList<String> originWord=new LinkedList<>();
+		String word = "researching";
 		System.out.println("word : " + word);
 		System.out.println("isCorrect : " + isCorrect(word, nv, originWord));
 		System.out.println("isNoun : " + nv[0]);

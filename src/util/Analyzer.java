@@ -1,34 +1,39 @@
 package util;
 
-import java.awt.event.KeyEvent;
 import java.util.concurrent.LinkedBlockingQueue;
 
 public class Analyzer implements Runnable {
 	private LinkedBlockingQueue<String> wordList;
 	private StringBuffer textBuffer;
 	private Display display = null;
-	private static final char[] NONSEPARATOR = { ',', ';', ':', '\'', '\"' };
+	private static final char[] NONSEPARATOR = { ',', ';', ':', '\"' };
 	private static final char[] CONNECTOR = { '-', '_', '+', '\\', '/' };
+	private String lastTakenWord = ".";
+	private boolean realSentence=false;
 
 	public Analyzer() {
 		this.wordList = new LinkedBlockingQueue<>();
 		this.textBuffer = new StringBuffer();
 	}
 
-	public void putCharacter(char c) throws InterruptedException {
-		if (c == KeyEvent.VK_BACK_SPACE && textBuffer.length() > 0) {
+	public void deleteCharacter() {
+		if (textBuffer.length() > 0) {
 			textBuffer.deleteCharAt(textBuffer.length() - 1);
-			return;
 		}
-		if (Character.isSpaceChar(c) && textBuffer.length() > 0) {
-			wordList.put(textBuffer.toString());
-			textBuffer.setLength(0);
-		} else if (!Character.isAlphabetic(c) && !Character.isDigit(c) && !isConnector(c)) {
+	}
+
+	public void putCharacter(char c) throws InterruptedException {
+		if (Character.isSpaceChar(c)) {
 			if (textBuffer.length() > 0) {
 				wordList.put(textBuffer.toString());
-				wordList.put(c + "");
 				textBuffer.setLength(0);
 			}
+		} else if (!Character.isAlphabetic(c) && !Character.isDigit(c) && !isConnector(c) && c != '\'') {
+			if (textBuffer.length() > 0) {
+				wordList.put(textBuffer.toString());
+				textBuffer.setLength(0);
+			}
+			wordList.put(c + "");
 		} else {
 			textBuffer.append(c);
 		}
@@ -75,15 +80,25 @@ public class Analyzer implements Runnable {
 		while (true) {
 			try {
 				String word = wordList.take();
+				System.out.println(word);
 				if (word.length() == 1 && !Character.isAlphabetic(word.charAt(0))) {
+					if(!realSentence) continue;
+					if (lastTakenWord.length() == 1 && !isNONSeparator(lastTakenWord.charAt(0))) {
+						lastTakenWord = word;
+						continue;
+					}
 					if (!isNONSeparator(word.charAt(0))) {
 						String nextKeyWord = display.fixSentence();
 						display.addNewSentence(nextKeyWord);
+						realSentence=false;
 					}
 				} else {
-					if (!containsDigitalCharacter(word) && !containsConnector(word))
-						display.put(word);
+					if (!containsDigitalCharacter(word) && !containsConnector(word)){
+						display.put(word.toLowerCase());
+						realSentence=true;
+					}
 				}
+				lastTakenWord = word;
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
