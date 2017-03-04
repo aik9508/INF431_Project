@@ -53,7 +53,7 @@ public class controller {
 	public void initialize() {
 		buf = new StringBuffer();
 		analyzer = new Analyzer();
-		display = new Display(score,synonym);
+		display = new Display(score, synonym);
 		analyzer.connectTo(display);
 		typingArea.setEditable(false);
 		incorrect.setEditable(false);
@@ -64,6 +64,7 @@ public class controller {
 		typingArea.setOnKeyPressed(new EventHandler<KeyEvent>() {
 			@Override
 			public void handle(KeyEvent event) {
+				// System.out.println(event.getCode());
 				if (event.getCode() == KeyCode.BACK_SPACE) {
 					if (buf.length() > 0) {
 						analyzer.deleteCharacter();
@@ -78,7 +79,8 @@ public class controller {
 		typingArea.setOnKeyTyped(new EventHandler<KeyEvent>() {
 			@Override
 			public void handle(KeyEvent event) {
-				if (status != ONGAME || event.getCharacter().equals("")) {
+
+				if (status != ONGAME || event.getCharacter().equals("") || event.getCharacter().charAt(0) == 0x08) {
 					event.consume();
 				} else {
 					char c = event.getCharacter().charAt(0);

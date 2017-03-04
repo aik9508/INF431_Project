@@ -9,7 +9,7 @@ public class Analyzer implements Runnable {
 	private static final char[] NONSEPARATOR = { ',', ';', ':', '\"' };
 	private static final char[] CONNECTOR = { '-', '_', '+', '\\', '/' };
 	private String lastTakenWord = ".";
-	private boolean realSentence=false;
+	private boolean realSentence = false;
 
 	public Analyzer() {
 		this.wordList = new LinkedBlockingQueue<>();
@@ -82,7 +82,8 @@ public class Analyzer implements Runnable {
 				String word = wordList.take();
 				System.out.println(word);
 				if (word.length() == 1 && !Character.isAlphabetic(word.charAt(0))) {
-					if(!realSentence) continue;
+					if (!realSentence)
+						continue;
 					if (lastTakenWord.length() == 1 && !isNONSeparator(lastTakenWord.charAt(0))) {
 						lastTakenWord = word;
 						continue;
@@ -90,12 +91,12 @@ public class Analyzer implements Runnable {
 					if (!isNONSeparator(word.charAt(0))) {
 						String nextKeyWord = display.fixSentence();
 						display.addNewSentence(nextKeyWord);
-						realSentence=false;
+						realSentence = false;
 					}
 				} else {
-					if (!containsDigitalCharacter(word) && !containsConnector(word)){
+					if (!containsDigitalCharacter(word) && !containsConnector(word)) {
 						display.put(word.toLowerCase());
-						realSentence=true;
+						realSentence = true;
 					}
 				}
 				lastTakenWord = word;
