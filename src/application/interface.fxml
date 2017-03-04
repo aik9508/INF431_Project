@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.GridPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controller">
+   <children>
+      <MenuBar prefHeight="32.0" prefWidth="600.0" style="-fx-background-color: grey;">
+        <menus>
+          <Menu mnemonicParsing="false" text="File">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Close" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Edit">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Delete" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Help">
+            <items>
+              <MenuItem mnemonicParsing="false" text="About" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+      <HBox fx:id="namebox" alignment="CENTER_LEFT" layoutY="33.0" prefHeight="54.0" prefWidth="350.0">
+         <children>
+            <Label prefHeight="44.0" prefWidth="91.0" text="Player :">
+               <HBox.margin>
+                  <Insets right="5.0" />
+               </HBox.margin>
+               <font>
+                  <Font size="20.0" />
+               </font>
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+            </Label>
+            <TextField fx:id="inputname" prefHeight="31.0" prefWidth="146.0" promptText="your name" />
+            <Button fx:id="submitname" mnemonicParsing="false" onAction="#hideGoButton" prefHeight="31.0" prefWidth="60.0" text="GO">
+               <HBox.margin>
+                  <Insets left="5.0" />
+               </HBox.margin>
+            </Button>
+         </children>
+         <padding>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </padding>
+      </HBox>
+      <HBox alignment="CENTER_RIGHT" layoutX="349.0" layoutY="33.0" prefHeight="54.0" prefWidth="250.0">
+         <children>
+            <Label prefHeight="30.0" prefWidth="125.0" text="Best Score :">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Text fx:id="highestscore" strokeType="OUTSIDE" strokeWidth="0.0" text="316" wrappingWidth="100.0">
+               <font>
+                  <Font size="24.0" />
+               </font>
+               <HBox.margin>
+                  <Insets right="10.0" />
+               </HBox.margin>
+            </Text>
+         </children>
+         <padding>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </padding>
+      </HBox>
+      <HBox alignment="CENTER_LEFT" layoutY="87.0" prefHeight="54.0" prefWidth="300.0">
+         <children>
+            <Label text="Timeout : ">
+               <font>
+                  <Font size="20.0" />
+               </font>
+               <HBox.margin>
+                  <Insets right="5.0" />
+               </HBox.margin>
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+            </Label>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="05 : 00 . 00" wrappingWidth="135.8134765625">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Text>
+         </children>
+         <padding>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </padding>
+      </HBox>
+      <HBox alignment="CENTER_RIGHT" layoutX="300.0" layoutY="87.0" prefHeight="54.0" prefWidth="300.0">
+         <children>
+            <Label prefHeight="30.0" prefWidth="118.0" text="Your Score : ">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="315" wrappingWidth="100.0">
+               <font>
+                  <Font size="24.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="10.0" right="10.0" />
+               </HBox.margin>
+            </Text>
+         </children>
+         <padding>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </padding>
+      </HBox>
+      <HBox alignment="CENTER_LEFT" layoutY="141.0" prefHeight="54.0" prefWidth="600.0">
+         <children>
+            <Label text="Synonym : ">
+               <font>
+                  <Font size="20.0" />
+               </font>
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+               <HBox.margin>
+                  <Insets right="5.0" />
+               </HBox.margin>
+            </Label>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="extra">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Text>
+         </children>
+         <padding>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </padding>
+      </HBox>
+      <TextArea layoutX="7.0" layoutY="195.0" prefHeight="382.0" prefWidth="585.0" wrapText="true" promptText="Input some sentences to start the game">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </TextArea>
+      <HBox layoutX="7.0" layoutY="584.0" prefHeight="215.0" prefWidth="585.0">
+         <padding>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </padding>
+         <children>
+            <Text fx:id="incorrect" strokeType="OUTSIDE" strokeWidth="0.0" text="Incorrect words : ">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Text>
+         </children>
+      </HBox>
+   </children>
+</AnchorPane>
