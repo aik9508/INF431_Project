@@ -10,6 +10,7 @@ public class Analyzer implements Runnable {
 	private static final char[] CONNECTOR = { '-', '_', '+', '\\', '/' };
 	private String lastTakenWord = ".";
 	private boolean realSentence = false;
+	private static final String POISON = "eric.goubault";
 
 	public Analyzer() {
 		this.wordList = new LinkedBlockingQueue<>();
@@ -41,6 +42,10 @@ public class Analyzer implements Runnable {
 
 	public void connectTo(Display d) {
 		display = d;
+	}
+
+	public void kill() throws InterruptedException {
+		wordList.put(POISON);
 	}
 
 	private static boolean isNONSeparator(char c) {
@@ -80,6 +85,8 @@ public class Analyzer implements Runnable {
 		while (true) {
 			try {
 				String word = wordList.take();
+				if (word.equals(POISON))
+					break;
 				System.out.println(word);
 				if (word.length() == 1 && !Character.isAlphabetic(word.charAt(0))) {
 					if (!realSentence)

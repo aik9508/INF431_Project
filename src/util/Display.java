@@ -11,26 +11,27 @@ public class Display {
 	public int currentScore;
 	private Text score;
 	private Text synonym;
+	private static final String POISON = "eric.goubault";
 
 	public Display(Text score, Text synonym) {
 		this.currentScore = 0;
 		this.score = score;
-		this.synonym=synonym;
+		this.synonym = synonym;
 		this.incorrectWordsList = new LinkedBlockingQueue<>();
 		this.currentSentence = new Sentence(null, incorrectWordsList);
 	}
 
 	public String fixSentence() {
-		int error=currentSentence.checkSentence();
-		currentScore+=currentSentence.getScore();
-		Platform.runLater(new Runnable() {			
+		int error = currentSentence.checkSentence();
+		currentScore += currentSentence.getScore();
+		Platform.runLater(new Runnable() {
 			@Override
 			public void run() {
-				score.setText(currentScore+"");
+				score.setText(currentScore + "");
 			}
 		});
-		String nextKeyWord=currentSentence.nextKeyWord();
-		Platform.runLater(new Runnable() {			
+		String nextKeyWord = currentSentence.nextKeyWord();
+		Platform.runLater(new Runnable() {
 			@Override
 			public void run() {
 				synonym.setText(nextKeyWord);
@@ -42,17 +43,21 @@ public class Display {
 
 	public void put(String word) throws InterruptedException {
 		currentSentence.put(word);
-		currentScore+=currentSentence.getScore();
-		Platform.runLater(new Runnable() {			
+		currentScore += currentSentence.getScore();
+		Platform.runLater(new Runnable() {
 			@Override
 			public void run() {
-				score.setText(currentScore+"");
+				score.setText(currentScore + "");
 			}
 		});
 	}
 
+	public void kill() throws InterruptedException {
+		incorrectWordsList.put(POISON);
+	}
+
 	public void addNewSentence(String nextKeyWord) {
-		this.currentSentence=new Sentence(nextKeyWord, incorrectWordsList);
+		this.currentSentence = new Sentence(nextKeyWord, incorrectWordsList);
 	}
 
 }

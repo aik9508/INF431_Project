@@ -7,7 +7,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class Main extends Application {
-	
+
 	@Override
 	public void start(Stage primaryStage) {
 		try {
@@ -16,6 +16,9 @@ public class Main extends Application {
 			primaryStage.setTitle("SpeedType");
 			primaryStage.setScene(scene);
 			primaryStage.setResizable(false);
+			primaryStage.setOnCloseRequest(e -> {
+				System.exit(0);
+			});
 			primaryStage.show();
 		} catch (Exception e) {
 			e.printStackTrace();

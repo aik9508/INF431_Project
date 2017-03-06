@@ -12,26 +12,27 @@
    <children>
       <MenuBar prefHeight="32.0" prefWidth="600.0" style="-fx-background-color: grey;">
         <menus>
-          <Menu mnemonicParsing="false" text="File">
+          <Menu mnemonicParsing="false" text="Game">
             <items>
-              <MenuItem mnemonicParsing="false" text="Close" />
-            </items>
-          </Menu>
-          <Menu mnemonicParsing="false" text="Edit">
-            <items>
-              <MenuItem mnemonicParsing="false" text="Delete" />
+              <MenuItem fx:id="gamerestart" mnemonicParsing="false" text="Restart" />
+              <MenuItem fx:id="gameclose" mnemonicParsing="false" text="Close" />
+              <MenuItem fx:id="gameclean" mnemonicParsing="false" text="Clean History" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Help">
             <items>
-              <MenuItem mnemonicParsing="false" text="About" />
+              <MenuItem fx:id="helprules" mnemonicParsing="false" text="Rules" />
+              <MenuItem fx:id="helpabout" mnemonicParsing="false" text="About" />
             </items>
           </Menu>
         </menus>
+         <padding>
+            <Insets left="-1.0" />
+         </padding>
       </MenuBar>
       <HBox fx:id="namebox" alignment="CENTER_LEFT" layoutY="33.0" prefHeight="54.0" prefWidth="350.0">
          <children>
-            <Label prefHeight="44.0" prefWidth="91.0" text="Player :">
+            <Label prefHeight="44.0" prefWidth="80.0" text="Player :">
                <HBox.margin>
                   <Insets right="5.0" />
                </HBox.margin>
@@ -43,7 +44,7 @@
                </padding>
             </Label>
             <TextField fx:id="inputname" prefHeight="31.0" prefWidth="146.0" promptText="your name" />
-            <Button fx:id="submitname" mnemonicParsing="false" onAction="#hideGoButton" prefHeight="31.0" prefWidth="60.0" text="GO">
+            <Button fx:id="submitname" mnemonicParsing="false" prefHeight="31.0" prefWidth="75.0" text="Submit">
                <HBox.margin>
                   <Insets left="5.0" />
                </HBox.margin>
@@ -53,19 +54,19 @@
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </padding>
       </HBox>
-      <HBox alignment="CENTER_RIGHT" layoutX="349.0" layoutY="33.0" prefHeight="54.0" prefWidth="250.0">
+      <HBox alignment="CENTER_LEFT" layoutX="349.0" layoutY="33.0" prefHeight="54.0" prefWidth="250.0">
          <children>
-            <Label prefHeight="30.0" prefWidth="130.0" text="Best Score :">
+            <Label prefHeight="30.0" prefWidth="115.0" text="Best Score :">
                <font>
                   <Font size="20.0" />
                </font>
             </Label>
-            <Text fx:id="highestscore" strokeType="OUTSIDE" strokeWidth="0.0" text="316" wrappingWidth="100.0">
+            <Text fx:id="highestscore" strokeType="OUTSIDE" strokeWidth="0.0" text="" wrappingWidth="100.0">
                <font>
                   <Font size="24.0" />
                </font>
                <HBox.margin>
-                  <Insets right="10.0" />
+                  <Insets left="5.0" right="10.0" />
                </HBox.margin>
             </Text>
          </children>
@@ -87,7 +88,7 @@
                </padding>
             </Label>
          	<!-- Time -->
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="05 : 00" wrappingWidth="135.8134765625" fx:id="timeLeft">
+            <Text fx:id="timeLeft" strokeType="OUTSIDE" strokeWidth="0.0" text="05 : 00" wrappingWidth="135.8134765625">
                <font>
                   <Font size="24.0" />
                </font>
@@ -97,27 +98,27 @@
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </padding>
       </HBox>
-      <HBox alignment="CENTER_RIGHT" layoutX="300.0" layoutY="87.0" prefHeight="54.0" prefWidth="300.0">
+      <HBox alignment="CENTER_LEFT" layoutX="300.0" layoutY="87.0" prefHeight="54.0" prefWidth="300.0">
          <children>
-            <Label prefHeight="30.0" prefWidth="130.0" text="Your Score : ">
+            <Label prefHeight="30.0" prefWidth="115.0" text="Your Score : ">
                <font>
                   <Font size="20.0" />
                </font>
             </Label>
-            <Text fx:id="score" strokeType="OUTSIDE" strokeWidth="0.0" text="315" wrappingWidth="100.0">
+            <Text fx:id="score" strokeType="OUTSIDE" strokeWidth="0.0" text="0" wrappingWidth="100.0">
                <font>
                   <Font size="24.0" />
                </font>
                <HBox.margin>
-                  <Insets left="10.0" right="10.0" />
+                  <Insets left="5.0" right="10.0" />
                </HBox.margin>
             </Text>
          </children>
          <padding>
-            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+            <Insets bottom="5.0" left="55.0" right="5.0" top="5.0" />
          </padding>
       </HBox>
-      <HBox alignment="CENTER_LEFT" layoutY="141.0" prefHeight="54.0" prefWidth="600.0">
+      <HBox alignment="CENTER_LEFT" layoutY="141.0" prefHeight="54.0" prefWidth="360.0">
          <children>
             <Label text="Synonym : ">
                <font>
@@ -130,7 +131,7 @@
                   <Insets right="5.0" />
                </HBox.margin>
             </Label>
-            <Text fx:id="synonym" strokeType="OUTSIDE" strokeWidth="0.0" text="extra">
+            <Text fx:id="synonym" strokeType="OUTSIDE" strokeWidth="0.0" text="">
                <font>
                   <Font size="24.0" />
                </font>
@@ -140,22 +141,17 @@
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </padding>
       </HBox>
-      <TextArea fx:id="typingArea" layoutX="7.0" layoutY="195.0" prefHeight="382.0" prefWidth="585.0" wrapText="true" promptText="Input some sentences to start the game">
+      <TextArea fx:id="typingArea" layoutX="7.0" layoutY="195.0" prefHeight="382.0" prefWidth="585.0" promptText="Input some sentences to start the game" wrapText="true">
          <font>
             <Font size="20.0" />
          </font>
       </TextArea>
-      <HBox layoutX="7.0" layoutY="584.0" prefHeight="215.0" prefWidth="585.0">
-         <padding>
-            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-         </padding>
-         <children>
-            <TextArea fx:id="incorrect"  text="Incorrect words : ">
-               <font>
-                  <Font size="20.0" />
-               </font>
-            </TextArea>
-         </children>
-      </HBox>
+      <TextArea fx:id="incorrect" layoutX="8.0" layoutY="588.0" prefHeight="200.0" prefWidth="585.0" text="Incorrect words : ">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </TextArea>
+      <Button fx:id="startandstop" layoutX="370.0" layoutY="153.0" mnemonicParsing="false" prefWidth="60.0" text="GO" />
+      <Button fx:id="reset" disable="true" layoutX="450.0" layoutY="153.0" mnemonicParsing="false" prefWidth="60.0" text="Reset" />
    </children>
 </AnchorPane>
