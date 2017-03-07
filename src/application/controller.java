@@ -210,6 +210,18 @@ public class controller {
 			}
 		});
 
+		gameclean.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				bestscore.setText("0");
+				try {
+					updateBestScore("0");
+				} catch (IOException e) {
+					System.out.println("Failed to clean the best score history");
+				}
+			}
+		});
+
 		reset.setOnAction(e -> reset());
 
 		typingArea.setOnKeyTyped(new EventHandler<KeyEvent>() {
