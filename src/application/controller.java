@@ -12,7 +12,10 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -26,6 +29,8 @@ import util.Analyzer;
 import util.Display;
 
 public class controller {
+	@FXML
+	private MenuBar menubar;
 	@FXML
 	private MenuItem gamerestart;
 	@FXML
@@ -222,6 +227,31 @@ public class controller {
 			}
 		});
 
+		helpabout.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				Alert aboutbox = new Alert(AlertType.INFORMATION);
+				aboutbox.setTitle("About SpeedTyper");
+				aboutbox.setHeaderText(null);
+				aboutbox.setContentText(
+						"SpeedTyper is the course project of <Programation d'Applications Concurentes et Distribuées>, developped by Ke WANG and Shiwen XIA at Ecole Polytechnique.");
+				aboutbox.showAndWait();
+			}
+		});
+
+		helprules.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				Alert rulesbox = new Alert(AlertType.INFORMATION);
+				rulesbox.setTitle("Game rules");
+				rulesbox.setHeaderText("How to play with SpeedTyper ?");
+				rulesbox.setContentText("1. Something\n2. Something\n");
+				rulesbox.showAndWait();
+			}
+		});
+
 		reset.setOnAction(e -> reset());
 
 		typingArea.setOnKeyTyped(new EventHandler<KeyEvent>() {
@@ -249,7 +279,8 @@ public class controller {
 			@Override
 			public void handle(ActionEvent event) {
 				String playerName = inputname.getText();
-				showname.setText(playerName);
+				if (!playerName.isEmpty())
+					showname.setText(playerName);
 				namebox.getChildren().remove(inputname);
 				namebox.getChildren().remove(submitname);
 				namebox.getChildren().add(showname);
@@ -263,11 +294,9 @@ public class controller {
 				startandstop.setText("Stop");
 				typingArea.requestFocus();
 
-				if (time_Left > 0 && status <= 0) {
-					if (status == NEWGAME) {
-						trd_analyser.start();
-						trd_display.start();
-					}
+				if (time_Left > 0 && status == NEWGAME) {
+					trd_analyser.start();
+					trd_display.start();
 					typingArea.setEditable(true);
 					status = ONGAME;
 					timeCounter = new Timeline(new KeyFrame(Duration.seconds(1), new EventHandler<ActionEvent>() {
@@ -287,6 +316,7 @@ public class controller {
 					}));
 					timeCounter.setCycleCount(Timeline.INDEFINITE);
 					timeCounter.play();
+					menubar.setDisable(true);
 				}
 
 				else if (status == ONGAME) {
@@ -314,7 +344,8 @@ public class controller {
 							System.out.println("Failed to write best score to file.");
 						}
 					}
-					System.out.println(trd_analyser.isAlive());
+					menubar.setDisable(false);
+					// System.out.println(trd_analyser.isAlive());
 				}
 			}
 		});
