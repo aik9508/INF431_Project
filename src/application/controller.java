@@ -69,7 +69,7 @@ public class controller {
 	private Analyzer analyzer;
 	private Display display;
 	Thread trd_analyser;
-	Thread trd_diaplay;
+	Thread trd_display;
 
 	@FXML
 	public void initialize() {
@@ -142,21 +142,21 @@ public class controller {
 	}
 
 	public String getBestScore() throws IOException {
-		BufferedReader br = new BufferedReader(new FileReader("bestscore.txt"));
+		BufferedReader br = new BufferedReader(new FileReader("txt/bestscore.txt"));
 		String score = br.readLine();
 		br.close();
 		return (score == null) ? "" : score;
 	}
 
 	public void updateBestScore(String newbestscore) throws IOException {
-		BufferedWriter bw = new BufferedWriter(new FileWriter("bestscore.txt"));
+		BufferedWriter bw = new BufferedWriter(new FileWriter("txt/bestscore.txt"));
 		bw.write(newbestscore);
 		bw.close();
 	}
 
 	private void createThreads() {
 		trd_analyser = new Thread(analyzer);
-		trd_diaplay = new Thread(new Runnable() {
+		trd_display = new Thread(new Runnable() {
 			@Override
 			public void run() {
 				while (true) {
@@ -266,7 +266,7 @@ public class controller {
 				if (time_Left > 0 && status <= 0) {
 					if (status == NEWGAME) {
 						trd_analyser.start();
-						trd_diaplay.start();
+						trd_display.start();
 					}
 					typingArea.setEditable(true);
 					status = ONGAME;
