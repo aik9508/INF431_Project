@@ -1,5 +1,11 @@
 package application;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
@@ -43,6 +49,8 @@ public class controller {
 	@FXML
 	private TextArea typingArea;
 	@FXML
+	private Text bestscore;
+	@FXML
 	private Text score;
 	@FXML
 	private Text synonym;
@@ -61,11 +69,15 @@ public class controller {
 	private Analyzer analyzer;
 	private Display display;
 	Thread trd_analyser;
-
 	Thread trd_diaplay;
 
 	@FXML
 	public void initialize() {
+		try {
+			bestscore.setText(getBestScore());
+		} catch (IOException e) {
+			System.out.println("Failed to read best score from file !");
+		}
 		buf = new StringBuffer();
 		analyzer = new Analyzer();
 		display = new Display(score, synonym);
@@ -75,13 +87,18 @@ public class controller {
 		myEvents();
 	}
 
-	public void reset() {
+	public void restart() {
 		status = NEWGAME;
 		if (namebox.getChildren().contains(showname)) {
 			namebox.getChildren().remove(showname);
 			namebox.getChildren().add(inputname);
 			inputname.requestFocus();
 			namebox.getChildren().add(submitname);
+		}
+		try {
+			bestscore.setText(getBestScore());
+		} catch (IOException e) {
+			System.out.println("Failed to read best score from file !");
 		}
 		score.setText("0");
 		startandstop.setDisable(false);
@@ -91,7 +108,7 @@ public class controller {
 		analyzer = new Analyzer();
 		display = new Display(score, synonym);
 		analyzer.connectTo(display);
-		timeLeft.setText("05:00");
+		timeLeft.setText("05 : 00");
 		typingArea.setText("");
 		incorrect.setText("");
 		synonym.setText("");
@@ -100,9 +117,45 @@ public class controller {
 		createThreads();
 	}
 
+	public void reset() {
+		status = NEWGAME;
+		try {
+			bestscore.setText(getBestScore());
+		} catch (IOException e) {
+			System.out.println("Failed to read best score from file !");
+		}
+		score.setText("0");
+		startandstop.setDisable(false);
+		reset.setDisable(true);
+		time_Left = 300;
+		buf = new StringBuffer();
+		analyzer = new Analyzer();
+		display = new Display(score, synonym);
+		analyzer.connectTo(display);
+		timeLeft.setText("05 : 00");
+		typingArea.setText("");
+		incorrect.setText("");
+		synonym.setText("");
+		typingArea.setEditable(false);
+		incorrect.setEditable(false);
+		createThreads();
+	}
+
+	public String getBestScore() throws IOException {
+		BufferedReader br = new BufferedReader(new FileReader("bestscore.txt"));
+		String score = br.readLine();
+		br.close();
+		return (score == null) ? "" : score;
+	}
+
+	public void updateBestScore(String newbestscore) throws IOException {
+		BufferedWriter bw = new BufferedWriter(new FileWriter("bestscore.txt"));
+		bw.write(newbestscore);
+		bw.close();
+	}
+
 	private void createThreads() {
 		trd_analyser = new Thread(analyzer);
-
 		trd_diaplay = new Thread(new Runnable() {
 			@Override
 			public void run() {
@@ -127,11 +180,8 @@ public class controller {
 	}
 
 	private void myEvents() {
-
 		createThreads();
-
 		showname.setFont(Font.font(24));
-
 		typingArea.setOnKeyPressed(new EventHandler<KeyEvent>() {
 			@Override
 			public void handle(KeyEvent event) {
@@ -146,14 +196,10 @@ public class controller {
 			}
 		});
 
-		reset.setOnAction(new EventHandler<ActionEvent>() {
-			// We need to do: update the best and
-			// register it in the txt file.
-			// score
+		gamerestart.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-
-				reset();
+				restart();
 			}
 		});
 
@@ -163,6 +209,8 @@ public class controller {
 				System.exit(0);
 			}
 		});
+
+		reset.setOnAction(e -> reset());
 
 		typingArea.setOnKeyTyped(new EventHandler<KeyEvent>() {
 			@Override
@@ -243,6 +291,17 @@ public class controller {
 					startandstop.setText("GO");
 					reset.setDisable(false);
 					reset.requestFocus();
+					int oldBestScore = Integer.parseInt(bestscore.getText());
+					String newscorestring = score.getText();
+					int newScore = Integer.parseInt(newscorestring);
+					if (oldBestScore < newScore) {
+						bestscore.setText(newscorestring);
+						try {
+							updateBestScore(newscorestring);
+						} catch (IOException e) {
+							System.out.println("Failed to write best score to file.");
+						}
+					}
 					System.out.println(trd_analyser.isAlive());
 				}
 			}

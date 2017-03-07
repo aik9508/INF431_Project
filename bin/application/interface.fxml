@@ -61,7 +61,7 @@
                   <Font size="20.0" />
                </font>
             </Label>
-            <Text fx:id="highestscore" strokeType="OUTSIDE" strokeWidth="0.0" text="" wrappingWidth="100.0">
+            <Text fx:id="bestscore" strokeType="OUTSIDE" strokeWidth="0.0" text="" wrappingWidth="100.0">
                <font>
                   <Font size="24.0" />
                </font>
@@ -152,6 +152,6 @@
          </font>
       </TextArea>
       <Button fx:id="startandstop" layoutX="370.0" layoutY="153.0" mnemonicParsing="false" prefWidth="60.0" text="GO" />
-      <Button fx:id="reset" disable="true" layoutX="450.0" layoutY="153.0" mnemonicParsing="false" prefWidth="60.0" text="Reset" />
+      <Button fx:id="reset" disable="true" layoutX="450.0" layoutY="153.0" mnemonicParsing="false" prefWidth="60.0" text="Again" />
    </children>
 </AnchorPane>
