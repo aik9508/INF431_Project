@@ -1,0 +1,143 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% University/School Laboratory Report
+% LaTeX Template
+% Version 3.1 (25/3/14)
+%
+% This template has been downloaded from:
+% http://www.LaTeXTemplates.com
+%
+% Original author:
+% Linux and Unix Users Group at Virginia Tech Wiki 
+% (https://vtluug.org/wiki/Example_LaTeX_chem_lab_report)
+%
+% License:
+% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\documentclass{article}
+
+\usepackage[version=3]{mhchem} % Package for chemical equation typesetting
+\usepackage{siunitx} % Provides the \SI{}{} and \si{} command for typesetting SI units
+\usepackage{graphicx} % Required for the inclusion of images
+\usepackage{natbib} % Required to change bibliography style to APA
+\usepackage{amsmath} % Required for some math elements 
+\usepackage{indentfirst}
+\usepackage{multirow}
+
+%\usepackage{times} % Uncomment to use the Times New Roman font
+
+%----------------------------------------------------------------------------------------
+%	DOCUMENT INFORMATION
+%----------------------------------------------------------------------------------------
+
+\title{SpeedTyper \\ INF431} % Title
+
+\author{Ke \textsc{WANG}, Shiwen \textsc{XIA}} % Author name
+
+\date{\today} % Date for the report
+
+\begin{document}
+
+\maketitle % Insert the title, author and date
+
+
+% If you wish to include an abstract, uncomment the lines below
+% \begin{abstract}
+% Abstract text
+% \end{abstract}
+
+%----------------------------------------------------------------------------------------
+%	SECTION 1
+%----------------------------------------------------------------------------------------
+
+\section{Introduction}
+
+SpeedTyper is a single-user typing game which calculates the speed and correcteness of sentences typed by the player. The player has 5 minutes to type a text via a user interface. The application will pick a word randomly in the last written sentence and shows the user a synonym of that word. The player must immediately integrate this proposed word in the sentence that is being typed. The correcteness of words and sentences inputed are also checked at the same time on background.
+
+The player gets points when words are typed correctly, while loses points when words are typed wrongly. At the end of the game, the player will get a final score. A highest score of history is kept, and the goal of this game is to get the highest score among all players.
+
+The project is implemented by Java. The user interface is implemented by JavaFx framework. In order to make all operations of typing, display and calculation in real-time, the technics of  multi-threads is used.
+
+
+ 
+%----------------------------------------------------------------------------------------
+%	SECTION 2
+%----------------------------------------------------------------------------------------
+
+\section{Implementation}
+
+Ici on parle de l'implementation de multithread.
+\subsection{Analyzer}
+
+\subsection{Displayer}
+
+\subsection{Online Dictionary APIs}
+
+\subsection{"Poison Pill"}
+
+%----------------------------------------------------------------------------------------
+%	SECTION 3
+%----------------------------------------------------------------------------------------
+
+\section{Interface}
+
+The interface is implemented by JavaFx framework.
+
+The interface consists of 4 main parts: menu bar, information block, input field, wrong words display field.
+\begin{itemize}
+	\item \textbf{Menu bar}: the functions of all menu items are as follows: \\
+	\begin{tabular}{l|l|l}
+		\hline
+		\hline
+		\multirow{3}{*}{Game} & Change Player & initializes all information and permits to create a new user \\
+		\cline{2-3}
+		& Close Game & closes the current interface \\
+		\cline{2-3}
+		& Clean History & sets the highest score to 0 \\
+		\hline
+		\multirow{2}{*}{Help} & Rules & displays game rules \\
+		\cline{2-3}
+		& About & displays application information \\
+		\hline
+		\hline
+	\end{tabular}
+
+	\item \textbf{Information block}: 
+		\begin{itemize}
+			\item[-] \textbf{Player}: Type in username and submit to create a new user.
+			\item[-] \textbf{Best Score}: Shows the history highest score.
+			\item[-] \textbf{Timeout}: Shows the remaining time, which counts down during the game.
+			\item[-] \textbf{Your Score}: Shows in real-time player's current score.
+			\item[-] \textbf{Synonym}: Shows the synonym of the word picked form previous sentence. This is the word must be intergrated in the currently typing sentence.
+			\item[-] \textbf{Go/Stop} button: Starts and stops a game.
+			\item[-] \textbf{Again button}: Restart a new game with the same player.
+		\end{itemize}
+	\item \textbf{Input field}: Allows to input sentences.
+	\item \textbf{Wrong words display}: Shows wrongly inputed words in real-time during the game.
+\end{itemize}
+
+%----------------------------------------------------------------------------------------
+%	SECTION 4
+%----------------------------------------------------------------------------------------
+
+\section{Conclusion}
+
+Ici est la conclusion
+
+%----------------------------------------------------------------------------------------
+%	BIBLIOGRAPHY
+%----------------------------------------------------------------------------------------
+
+\bibliographystyle{apalike}
+
+\bibliography{sample}
+
+%----------------------------------------------------------------------------------------
+
+
+\end{document}
