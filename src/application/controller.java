@@ -228,7 +228,6 @@ public class controller {
 		});
 
 		helpabout.setOnAction(new EventHandler<ActionEvent>() {
-
 			@Override
 			public void handle(ActionEvent event) {
 				Alert aboutbox = new Alert(AlertType.INFORMATION);
